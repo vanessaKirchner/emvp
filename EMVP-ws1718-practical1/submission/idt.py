@@ -5,67 +5,90 @@ import numpy
 import matplotlib.pyplot as plt;
 
 
-# Test Python version
-# sys.stdout.write("hello from Python %s\n" % (sys.version,))
 
-# Exercise 2.1
+############ Exercise 2.2
 
-
-# Read data
-datalist = []
-
-# Read data and save to list
-with open('data.csv', 'rt', encoding='utf-8') as csvfile:
-	data = csv.reader(csvfile, delimiter='\t', quotechar='|')
-	datalist = list(data)
-
+def removeInvalid(data):	
+	# Remove invalid data points
 	
-# Show data
-#print(datalist)
-
-# Show one element
-#print(datalist[1][1])
-
+	erased = []
+	
+	for x in range(2,len(data)) :
 			
-		
-# Exercise 2.2
-
-# Remove invalid data points
-
-erased = []
-print(len(datalist))
-
-for x in range(2,len(datalist)) :
-		
-	if (datalist[x][5] != '0') and (datalist[x][10] != '0'):
-		erased.append(datalist[x])
+		if (data[x][5] != '0') and (data[x][10] != '0'):
+			erased.append(data[x])
 			
-print(len(erased))
+	return erased
 	
-# TODO: Sind das wirklich alle die Invalid sind?
-
-
-# Show data points on image
-image_name = 'stimuli.jpg'
-
-image = plt.imread(image_name);
-implot = plt.imshow(image);
-
-for x in range(2,len(datalist)) :
-#for x in range(2,10) :
 	
-	# left eye
-	plt.scatter([datalist[x][1]], [datalist[x][2]])
+def plotPoints(image_name, data):
+	image = plt.imread(image_name);
+	implot = plt.imshow(image);
 	
-	# right eye
-	plt.scatter([datalist[x][6]], [datalist[x][7]], c='r')
+	for x in range(2,len(data)) :
+		
+		# left eye
+		plt.scatter([data[x][1]], [data[x][2]])
+		
+		# right eye
+		plt.scatter([data[x][6]], [data[x][7]], c='r')
+	
+	
+	plt.savefig('eyes-overlay.png')
+	plt.show()
+		
+
+############ Exercise 3 I-DT
+
+def idt(data, dispersion_threshold, duration_threshold):
+	dispersion_threshold = 100
+	duration_threshold = 100 # TODO: welcher Wert
+	
+	fixations = []
+	
+	# initialize window over first points to cover the duration threshold
+	# TODO
+
+	return fixations
 
 
-plt.savefig('eyes-overlay.png')
-#plt.show()
 
+def main():
+	
+	# Test Python version
+	# sys.stdout.write("hello from Python %s\n" % (sys.version,))
+	
+	############ Exercise 2.1
+	
+	# Read data
+	datalist = []
+	
+	# Read data and save to list
+	with open('data.csv', 'rt', encoding='utf-8') as csvfile:
+		data = csv.reader(csvfile, delimiter='\t', quotechar='|')
+		datalist = list(data)
+	
+			
+	############ Exercise 2.2
+	
+	# Remove invalid data points
+	erased = removeInvalid(datalist)
+	# TODO: Sind das wirklich alle die Invalid sind?
+	
+	
+	# Show data points on image
+	image_name = 'stimuli.jpg'	
+	#plotPoints(image_name, datalist)
+	
 
+	
+	# Exercise 3 - IDT
+	dispersion_threshold = 100
+	duration_threshold = 100 # TODO: welcher Wert
+	
+	fixations_idt = idt(erased, dispersion_threshold, duration_threshold)
 
+if __name__ == "__main__": main()
 
 
 
