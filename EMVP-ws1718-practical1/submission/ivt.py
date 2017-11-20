@@ -5,9 +5,9 @@ import numpy
 import matplotlib.pyplot as plt
 
 
-############ Exercise 2.2
+# ------- Exercise 2.2
 
-def removeInvalid(data):
+def remove_invalid(data):
     # Remove invalid data points
 
     erased = []
@@ -20,7 +20,7 @@ def removeInvalid(data):
     return erased
 
 
-def plotPoints(image_name, data):
+def plot_points(image_name, data):
     image = plt.imread(image_name)
     implot = plt.imshow(image)
 
@@ -35,7 +35,7 @@ def plotPoints(image_name, data):
     plt.show()
 
 
-############ Exercise 3 I-VT
+# ------- Exercise 3 I-VT
 
 def ivt(data, velocity_threshold):
     fixation_threshold = 100  # TODO benutzen?
@@ -68,7 +68,7 @@ def ivt(data, velocity_threshold):
 
 
 def main():
-    ############ Exercise 2.1
+    # ------- Exercise 2.1
 
     # Read data
     datalist = []
@@ -78,18 +78,15 @@ def main():
         data = csv.reader(csvfile, delimiter='\t', quotechar='|')
         datalist = list(data)
 
-    ############ Exercise 2.2
+    # ------- Exercise 2.2
 
     # Remove invalid data points
-    erased = removeInvalid(datalist)
+    erased = remove_invalid(datalist)
     # TODO: Sind das wirklich alle die Invalid sind?
-
 
     # Show data points on image
     image_name = 'stimuli.jpg'
     # plotPoints(image_name, datalist)
-
-
 
     # Exercise 3 - IVT
     velocity_threshold = 8250  # TODO Macht das Sinn? Irgendwie kommen da nur so große abstände raus

@@ -3,10 +3,10 @@ import csv
 import matplotlib.pyplot as plt
 
 
-############ Exercise 2.2
+# ------- Exercise 2.2
 
 # Remove invalid data points
-def removeInvalid(data):
+def remove_invalid(data):
 
     erased = []
 
@@ -18,7 +18,7 @@ def removeInvalid(data):
 
 
 # Plot points on image
-def plotPoints(image_name, data):
+def plot_points(image_name, data):
     image = plt.imread(image_name)
     implot = plt.imshow(image)
 
@@ -33,7 +33,7 @@ def plotPoints(image_name, data):
     plt.show()
 
 
-############ Exercise 3 I-DT
+# ------- Exercise 3 I-DT
 
 def idt(data, dispersion_threshold, duration_threshold):
     dispersion_threshold = 100
@@ -61,18 +61,15 @@ def main():
         data = csv.reader(csvfile, delimiter='\t', quotechar='|')
         datalist = list(data)
 
-    ############ Exercise 2.2
+    # ------- Exercise 2.2
 
     # Remove invalid data points
-    erased = removeInvalid(datalist)
+    erased = remove_invalid(datalist)
     # TODO: Sind das wirklich alle die Invalid sind?
-
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    plotPoints(image_name, datalist)
-
-
+    plot_points(image_name, datalist)
 
     # Exercise 3 - IDT
     dispersion_threshold = 100
