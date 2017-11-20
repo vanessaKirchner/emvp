@@ -28,7 +28,7 @@ def plotPoints(image_name, data):
 	for x in range(2,len(data)) :
 
 		# left eye
-		plt.scatter([data[x][1]], [data[x][2]])
+		plt.scatter([data[x][1]], [data[x][2]], c='b')
 
 		# right eye
 		plt.scatter([data[x][6]], [data[x][7]], c='r')
@@ -76,9 +76,6 @@ def ivt(data, velocity_threshold):
 
 
 def main():
-
-	# Test Python version
-	# sys.stdout.write("hello from Python %s\n" % (sys.version,))
 
 	############ Exercise 2.1
 
