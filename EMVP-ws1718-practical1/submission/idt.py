@@ -69,7 +69,7 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    plot_points(image_name, datalist)
+    plot_points(image_name, erased)
 
     # Exercise 3 - IDT
     dispersion_threshold = 100

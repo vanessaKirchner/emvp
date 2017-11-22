@@ -86,7 +86,7 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    plot_points(image_name, datalist)
+    plot_points(image_name, erased)
 
     # Exercise 3 - IVT
     velocity_threshold = 8250  # TODO Macht das Sinn? Irgendwie kommen da nur so große abstände raus
