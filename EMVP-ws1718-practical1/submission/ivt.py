@@ -47,6 +47,10 @@ def ivt(data, velocity_threshold):
 
         # Calculate the point-to-point velocities for each point in the protocol
         velocity = float(data[point + 1][0]) - float(data[point][0])
+        #TODO hier wird ja nur der Zeitunterschied in ms zwischen zwei Punkten gemessen, oder?
+        #TODO muss dann nicht noch irgendwie mit den Koordinaten der Datenpunkten die Gradzahl pro Sekunde gemessen werden
+        #TODO und daran dann entschieden werden, ob er unter oder über dem threshold liegt?
+
 
         # Label each point below velocity threshold as a fixation point, otherwise saccade
         if velocity < velocity_threshold:
@@ -56,7 +60,7 @@ def ivt(data, velocity_threshold):
 
     # Collapse consecutive fixation points into fixation groups, removing saccade points
     for point in range(0, len(data) - 1):
-        if (data[point][11] != '0'):
+        if (data[point][11] != '0'): # TODO ist das nicht unnötig, da wir ja schon bereits nur mit validen daten die funktion aufrufen?
             fixations.append(data[point])
 
     # map each fixation group to a fixation at the centroid of its points
