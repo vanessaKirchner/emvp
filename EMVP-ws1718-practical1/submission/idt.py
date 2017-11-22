@@ -24,12 +24,12 @@ def plot_points(image_name, data):
 
     for x in range(2, len(data)):
         # left eye
-        plt.scatter([data[x][1]], [data[x][2]], c='b')
+        plt.scatter([data[x][1]], [data[x][2]], s=1, c='b')
 
         # right eye
-        plt.scatter([data[x][6]], [data[x][7]], c='r')
+        plt.scatter([data[x][6]], [data[x][7]], s=1, c='r')
 
-    plt.savefig('eyes-overlay.png')
+    plt.savefig('eyes-overlay.jpg')
     plt.show()
 
 

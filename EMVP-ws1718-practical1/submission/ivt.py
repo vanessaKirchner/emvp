@@ -26,12 +26,12 @@ def plot_points(image_name, data):
 
     for x in range(2, len(data)):
         # left eye
-        plt.scatter([data[x][1]], [data[x][2]], c='b')
+        plt.scatter([data[x][1]], [data[x][2]], s=1, c='b')
 
         # right eye
-        plt.scatter([data[x][6]], [data[x][7]], c='r')
+        plt.scatter([data[x][6]], [data[x][7]], s=1, c='r')
 
-    plt.savefig('eyes-overlay.png')
+    plt.savefig('eyes-overlay.jpg')
     plt.show()
 
 
@@ -86,7 +86,7 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    # plotPoints(image_name, datalist)
+    plot_points(image_name, datalist)
 
     # Exercise 3 - IVT
     velocity_threshold = 8250  # TODO Macht das Sinn? Irgendwie kommen da nur so große abstände raus
