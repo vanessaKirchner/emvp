@@ -38,18 +38,14 @@ def plot_points(image_name, data):
 # ------- Exercise 3 I-VT
 
 def ivt(data, velocity_threshold):
-    fixation_threshold = 100  # TODO benutzen?
-    saccade_threshold = 300  # TODO benutzen?
-
+    print("IVT")
     fixations = []
 
     for point in range(0, len(data) - 1):
 
         # Calculate the point-to-point velocities for each point in the protocol
         velocity = float(data[point + 1][0]) - float(data[point][0])
-        #TODO hier wird ja nur der Zeitunterschied in ms zwischen zwei Punkten gemessen, oder?
-        #TODO muss dann nicht noch irgendwie mit den Koordinaten der Datenpunkten die Gradzahl pro Sekunde gemessen werden
-        #TODO und daran dann entschieden werden, ob er unter oder über dem threshold liegt?
+        #TODO velocity richtig? Eventuell Gradzahl?
 
 
         # Label each point below velocity threshold as a fixation point, otherwise saccade
@@ -59,15 +55,27 @@ def ivt(data, velocity_threshold):
             data[point].append('0')
 
     # Collapse consecutive fixation points into fixation groups, removing saccade points
-    for point in range(0, len(data) - 1):
-        if (data[point][11] != '0'): # TODO ist das nicht unnötig, da wir ja schon bereits nur mit validen daten die funktion aufrufen?
-            fixations.append(data[point])
+    idx = 0 # group index
+    for point in range(0, len(data) - 2): #TODO oben einen noch einfügen, etnscheiden was letztes element ist
+
+        if (data[point][11] == '0'):
+
+            if(data[point+1][11] == '1'):
+                idx = idx + 1
+
+            continue
+
+        data[point].append(idx)
+        fixations.append(data[point])
+
 
     # map each fixation group to a fixation at the centroid of its points
 
     # TODO
 
     # Return fixations
+
+    print("IVT finished: " + str(idx) + " Groups detected")
     return fixations
 
 
@@ -90,11 +98,13 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    plot_points(image_name, erased)
+    #plot_points(image_name, erased)
 
     # Exercise 3 - IVT
-    velocity_threshold = 8250  # TODO Macht das Sinn? Irgendwie kommen da nur so große abstände raus
+    velocity_threshold = 200000  # threshold in microseconds
     fixations_ivt = ivt(erased, velocity_threshold)
+
+    print(fixations_ivt[0:10])
 
 
 if __name__ == "__main__": main()
