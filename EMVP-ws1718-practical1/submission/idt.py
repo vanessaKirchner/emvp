@@ -37,13 +37,40 @@ def plot_points(image_name, data):
 
 def idt(data, dispersion_threshold, duration_threshold):
     dispersion_threshold = 100
-    duration_threshold = 100  # TODO: welcher Wert
+    duration_threshold = 6666061580  # TODO: welcher Wert
 
     fixations = []
 
+    # TODO: while there are still points
+
     # initialize window over first points to cover the duration threshold
+    duration = 0
+    idx = 0;
+    window = []
+    while (duration < duration_threshold):
+        window.append(data[idx])
+        duration = duration + int(window[idx][0])
+        del data[idx]
+        idx = idx + 1
+
+    # if dispersion of window points <= threshold
+    dispersion = 0 #TODO calculate Dispersion. Noch falsch
+    while (dispersion <= dispersion_threshold):
+
+        # add additional points to the window until dispersion > threshold
+
+        # Note a fixation at the centroid of the window points
+
+        # remove window points from points
+
+
+    # Else: remove first point from points
     # TODO
 
+    print(window)
+
+    # return fixations
+    print("I-DT finished")
     return fixations
 
 
@@ -69,7 +96,7 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    plot_points(image_name, erased)
+    #plot_points(image_name, erased)
 
     # Exercise 3 - IDT
     dispersion_threshold = 100
