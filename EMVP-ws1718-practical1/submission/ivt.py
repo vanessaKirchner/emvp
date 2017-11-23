@@ -54,9 +54,11 @@ def ivt(data, velocity_threshold):
         else:
             data[point].append('0')
 
+    data[len(data)-1].append('0') #last point is saccade, algorithm can use more points
+
     # Collapse consecutive fixation points into fixation groups, removing saccade points
     idx = 0 # group index
-    for point in range(0, len(data) - 2): #TODO oben einen noch einfügen, etnscheiden was letztes element ist
+    for point in range(0, len(data) - 1):
 
         if (data[point][11] == '0'):
 
@@ -74,7 +76,6 @@ def ivt(data, velocity_threshold):
     # TODO
 
     # Return fixations
-
     print("IVT finished: " + str(idx) + " Groups detected")
     return fixations
 
