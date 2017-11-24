@@ -60,8 +60,7 @@ def ivt(data, velocity_threshold):
 
         # Calculate the point-to-point velocities for each point in the protocol
         velocity = float(data[point + 1][0]) - float(data[point][0])
-        #TODO velocity richtig? Eventuell Gradzahl?
-
+        # TODO velocity richtig? Eventuell Gradzahl?
 
         # Label each point below velocity threshold as a fixation point, otherwise saccade
         if velocity < velocity_threshold:
@@ -85,7 +84,6 @@ def ivt(data, velocity_threshold):
         data[point].append(idx)
         fixations.append(data[point])
 
-
     fixation_centroids = []
     # map each fixation group to a fixation at the centroid of its points
     for i in range(0, idx): # for each group
@@ -104,18 +102,16 @@ def ivt(data, velocity_threshold):
                 avg_righteye_x = avg_righteye_x + float(fixations[point][6])
                 avg_righteye_y = avg_righteye_y + float(fixations[point][7])
 
-
         avg_lefteye_x = avg_lefteye_x / counter
         avg_lefteye_y = avg_lefteye_y / counter
         avg_righteye_x = avg_righteye_x / counter
         avg_righteye_y = avg_righteye_y / counter
 
-        print("Group " + str(i) +  " Left: " + str(avg_lefteye_x) + " " + str(avg_lefteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
+        print("Group " + str(i) + " Left: " + str(avg_lefteye_x) + " " + str(avg_lefteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
 
         data = [avg_lefteye_x, avg_lefteye_y, avg_righteye_x, avg_righteye_y]
 
         fixation_centroids.append(data)
-
 
     # TODO welcher Punkt ist Fixation? Kann man einfach so den Centroid nehmen auch wenn dieser nicht in den Punkten vorhanden ist?
 

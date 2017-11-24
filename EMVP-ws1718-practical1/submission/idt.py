@@ -50,21 +50,24 @@ def idt(data, dispersion_threshold, duration_threshold):
     while (duration < duration_threshold):
         window.append(data[idx])
         duration = duration + int(window[idx][0])
-        del data[idx]
-        idx = idx + 1
 
-    # if dispersion of window points <= threshold
-    dispersion = 0 #TODO calculate Dispersion. Noch falsch
-    while (dispersion <= dispersion_threshold):
+        # if dispersion of window points <= threshold
+        dispersion = 0 #TODO calculate Dispersion. Noch falsch
+        if (dispersion <= dispersion_threshold):
 
-        # add additional points to the window until dispersion > threshold
+            # add additional points to the window until dispersion > threshold
+            window.append(data[idx])
+            idx = idx + 1
+            # TODO: Update dispersion: Formel vom Blatt: Was ist x und y?
 
         # Note a fixation at the centroid of the window points
 
         # remove window points from points
 
+            # del data[idx] Remove point
+            # idx = idx + 1
 
-    # Else: remove first point from points
+        # Else: remove first point from points
     # TODO
 
     print(window)
