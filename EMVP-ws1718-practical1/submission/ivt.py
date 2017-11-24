@@ -73,6 +73,31 @@ def ivt(data, velocity_threshold):
 
     # map each fixation group to a fixation at the centroid of its points
 
+    for i in range(0, idx):
+        counter = 0
+        avg_lefteye_x = 0
+        avg_righteye_x = 0
+        avg_lefteye_y = 0
+        avg_righteye_y = 0
+
+        for point in range(0,len(fixations)):
+            if (fixations[point][12] == i):
+                counter = counter + 1
+                avg_lefteye_x = avg_lefteye_x + float(fixations[point][1])
+                avg_lefteye_y = avg_lefteye_y + float(fixations[point][2])
+                avg_righteye_x = avg_righteye_x + float(fixations[point][6])
+                avg_righteye_y = avg_righteye_y + float(fixations[point][7])
+
+
+        avg_lefteye_x = avg_lefteye_x / counter
+        avg_lefteye_y = avg_lefteye_y / counter
+        avg_righteye_x = avg_righteye_x / counter
+        avg_righteye_y = avg_righteye_y / counter
+
+        print("Group " + str(i) +  " Left: " + str(avg_lefteye_x) + " " + str(avg_righteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
+
+
+
     # TODO
 
     # Return fixations
