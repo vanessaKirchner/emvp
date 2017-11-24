@@ -72,14 +72,14 @@ def ivt(data, velocity_threshold):
 
 
     # map each fixation group to a fixation at the centroid of its points
-
-    for i in range(0, idx):
+    for i in range(0, idx): # for each group
         counter = 0
         avg_lefteye_x = 0
         avg_righteye_x = 0
         avg_lefteye_y = 0
         avg_righteye_y = 0
 
+        # calculate centroid
         for point in range(0,len(fixations)):
             if (fixations[point][12] == i):
                 counter = counter + 1
@@ -94,11 +94,11 @@ def ivt(data, velocity_threshold):
         avg_righteye_x = avg_righteye_x / counter
         avg_righteye_y = avg_righteye_y / counter
 
-        print("Group " + str(i) +  " Left: " + str(avg_lefteye_x) + " " + str(avg_righteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
+        print("Group " + str(i) +  " Left: " + str(avg_lefteye_x) + " " + str(avg_lefteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
 
 
 
-    # TODO
+    # TODO welcher Punkt ist Fixation?
 
     # Return fixations
     print("IVT finished: " + str(idx) + " Groups detected")
