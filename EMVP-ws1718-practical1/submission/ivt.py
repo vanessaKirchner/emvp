@@ -34,6 +34,21 @@ def plot_points(image_name, data):
     plt.savefig('eyes-overlay.jpg')
     plt.show()
 
+# Plot detected fixations
+def plot_fixations(image_name, data):
+    image = plt.imread(image_name)
+    implot = plt.imshow(image)
+
+    for x in range(0, len(data)):
+        # left eye
+        plt.scatter([data[x][0]], [data[x][1]], s=10, c='b')
+
+        # right eye
+        plt.scatter([data[x][2]], [data[x][3]], s=10, c='r')
+
+    #plt.savefig('eyes-overlay.jpg') # TODO Speichern funktioniert hier irgendwie nicht?
+    plt.show()
+
 
 # ------- Exercise 3 I-VT
 
@@ -71,6 +86,7 @@ def ivt(data, velocity_threshold):
         fixations.append(data[point])
 
 
+    fixation_centroids = []
     # map each fixation group to a fixation at the centroid of its points
     for i in range(0, idx): # for each group
         counter = 0
@@ -96,13 +112,16 @@ def ivt(data, velocity_threshold):
 
         print("Group " + str(i) +  " Left: " + str(avg_lefteye_x) + " " + str(avg_lefteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
 
+        data = [avg_lefteye_x, avg_lefteye_y, avg_righteye_x, avg_righteye_y]
+
+        fixation_centroids.append(data)
 
 
-    # TODO welcher Punkt ist Fixation?
+    # TODO welcher Punkt ist Fixation? Kann man einfach so den Centroid nehmen auch wenn dieser nicht in den Punkten vorhanden ist?
 
     # Return fixations
     print("IVT finished: " + str(idx) + " Groups detected")
-    return fixations
+    return fixation_centroids
 
 
 def main():
@@ -127,10 +146,9 @@ def main():
     #plot_points(image_name, erased)
 
     # Exercise 3 - IVT
-    velocity_threshold = 200000  # threshold in microseconds
+    velocity_threshold = 150000  # threshold in microseconds
     fixations_ivt = ivt(erased, velocity_threshold)
-
-    print(fixations_ivt[0:10])
+    plot_fixations(image_name, fixations_ivt)
 
 
 if __name__ == "__main__": main()
