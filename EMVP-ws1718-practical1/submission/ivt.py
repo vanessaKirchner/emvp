@@ -46,7 +46,7 @@ def plot_fixations(image_name, data):
         # right eye
         plt.scatter([data[x][2]], [data[x][3]], s=10, c='r')
 
-    #plt.savefig('eyes-overlay.jpg') # TODO Speichern funktioniert hier irgendwie nicht?
+    plt.savefig('ivt-overlay.jpg') # TODO Speichern funktioniert hier irgendwie nicht? Oder anscheinend schon?
     plt.show()
 
 

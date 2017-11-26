@@ -33,47 +33,116 @@ def plot_points(image_name, data):
     plt.show()
 
 
+def plot_idt_fixations(image_name, data):
+    image = plt.imread(image_name)
+    implot = plt.imshow(image)
+
+    for x in range(0, len(data)):
+        # left eye
+        plt.scatter([data[x][0]], [data[x][1]], s=10, c='b')
+
+    plt.savefig('idt-overlay.jpg')
+    plt.show()
 # ------- Exercise 3 I-DT
 
 def idt(data, dispersion_threshold, duration_threshold):
-    dispersion_threshold = 100
-    duration_threshold = 6666061580  # TODO: welcher Wert
+    dispersion_threshold = 200
+    # duration_threshold = 6666061580  # TODO: welcher Wert (100 000 = gleich wie auf Übungsblatt?)
 
     fixations = []
 
-    # TODO: while there are still points
+    counter = 0
+    ##while there are still some points
+    while data:
+        idx = 0
+        window = []
+        duration = 0
+        # initialize window over first points to cover the duration threshold
+        while duration < duration_threshold:
+            window.append(data[idx])
+            if idx == 0:
+                duration = 0
+            else:
+                duration = duration + (int(window[idx][0]) - int(window[idx - 1][0]))
+            idx = idx + 1
+            counter = counter + 1
 
-    # initialize window over first points to cover the duration threshold
-    duration = 0
-    idx = 0;
-    window = []
-    while (duration < duration_threshold):
-        window.append(data[idx])
-        duration = duration + int(window[idx][0])
+        # calculate dispersion
+        left_x = []
+        left_y = []
+        right_x = []
+        right_y = []
+        for point in range(0, len(window)):
+            left_x.append(float(window[point][1]))
+            left_y.append(float(window[point][2]))
+            right_x.append(float(window[point][6]))
+            right_y.append(float(window[point][7]))
+
+        max_x_l = max(left_x)
+        max_y_l = max(left_y)
+        max_x_r = max(right_x)
+        max_y_r = max(right_y)
+        min_x_l = min(left_x)
+        min_y_l = min(left_y)
+        min_x_r = min(right_x)
+        min_y_r = min(right_y)
+        dispersion = (max_x_l - min_x_l) + (max_y_l - min_y_l)
 
         # if dispersion of window points <= threshold
-        dispersion = 0 #TODO calculate Dispersion. Noch falsch
-        if (dispersion <= dispersion_threshold):
-
+        if dispersion <= dispersion_threshold:
             # add additional points to the window until dispersion > threshold
-            window.append(data[idx])
-            idx = idx + 1
-            # TODO: Update dispersion: Formel vom Blatt: Was ist x und y?
+            while dispersion <= dispersion_threshold:
+                window.append(data[idx])
+                idx = idx + 1
+                counter = counter + 1
 
-        # Note a fixation at the centroid of the window points
+                #calculate new dispersion
+                left_x = []
+                left_y = []
+                right_x = []
+                right_y = []
+                for point in range(0, len(window)):
+                    left_x.append(float(window[point][1]))
+                    left_y.append(float(window[point][2]))
+                    right_x.append(float(window[point][6]))
+                    right_y.append(float(window[point][7]))
 
-        # remove window points from points
+                max_x_l = max(left_x)
+                max_y_l = max(left_y)
+                max_x_r = max(right_x)
+                max_y_r = max(right_y)
+                min_x_l = min(left_x)
+                min_y_l = min(left_y)
+                min_x_r = min(right_x)
+                min_y_r = min(right_y)
+                dispersion = (max_x_l - min_x_l) + (max_y_l - min_y_l)
 
-            # del data[idx] Remove point
-            # idx = idx + 1
+            #note a fixation at the centoid of the window points
+            avg_x_l = 0
+            avg_y_l = 0
+            for point in range(0, len(window)):
+                avg_x_l = avg_x_l + left_x[point]
+                avg_y_l = avg_y_l + left_y[point]
 
-        # Else: remove first point from points
-    # TODO
-
-    print(window)
+            avg_x_l = avg_x_l / len(window)
+            avg_y_l = avg_y_l / len(window)
+            centroid = [avg_x_l, avg_y_l]
+            fixations.append(centroid)
+            #remove winow points from data points
+            data_temp = []
+            for row in range(counter, len(data)):
+                data_temp.append(data[row])
+            data = data_temp
+        else:
+            #remove first point from data points
+            data_temp = []
+            for row in range(1, len(data)):
+                data_temp.append(data[row])
+            data = data_temp
 
     # return fixations
     print("I-DT finished")
+    print("Amount of fixations found: " + str(len(fixations)))
     return fixations
 
 
@@ -99,13 +168,14 @@ def main():
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    #plot_points(image_name, erased)
+    # plot_points(image_name, erased)
 
     # Exercise 3 - IDT
     dispersion_threshold = 100
-    duration_threshold = 100  # TODO: welcher Wert
+    duration_threshold = 100000  # TODO: welcher Wert (100.000, so wie es auf blatt steht?)
 
     fixations_idt = idt(erased, dispersion_threshold, duration_threshold)
+    plot_idt_fixations(image_name, fixations_idt)
 
 
 if __name__ == "__main__": main()
