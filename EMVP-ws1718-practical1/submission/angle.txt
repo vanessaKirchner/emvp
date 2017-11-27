@@ -1,12 +1,9 @@
 
-given width: 500 mm
-given height: 300 mm
+Assuming that the participant is looking on the screen with an right angle. The given 1000 px can be converted to 195 mm
+by using the previous exercise. So 500 px are 97,5 mm.
+Using Pythagoras the hypotenuse can be calculated by the following formular: hypot = sqrt(97,5^2 + 600^2)
+To calculate the gaze angle the cos can be used: angle = cos(600/hypot)
+This angle needs to be taken twice (angle * 2) to gain the whole angle of the gaze.
 
-The stimuli image has 2560 x 1600 pixel. The ration of mm per pixel is asked. This can be calculated by dividing the
-number of pixel through the given mm.
+After calculating the result, we get an angle of 63,16°
 
-width: 500 mm / 2560 px ~ 0.195
-height: 300 mm / 1600 px ~ 0.185
-
-The ratio of width and height is quite similar and approximately 0.19. The pixels are quadratic. So ca. 0.19 mm can be used
-for one pixel in both directions.
