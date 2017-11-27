@@ -67,22 +67,14 @@ def idt(data, dispersion_threshold, duration_threshold):
         # calculate dispersion
         left_x = []
         left_y = []
-        right_x = []
-        right_y = []
         for point in range(0, len(window)):
             left_x.append(float(window[point][1]))
             left_y.append(float(window[point][2]))
-            right_x.append(float(window[point][6]))
-            right_y.append(float(window[point][7]))
 
         max_x_l = max(left_x)
         max_y_l = max(left_y)
-        max_x_r = max(right_x)
-        max_y_r = max(right_y)
         min_x_l = min(left_x)
         min_y_l = min(left_y)
-        min_x_r = min(right_x)
-        min_y_r = min(right_y)
         dispersion = (max_x_l - min_x_l) + (max_y_l - min_y_l)
 
         # if dispersion of window points <= threshold
@@ -96,22 +88,14 @@ def idt(data, dispersion_threshold, duration_threshold):
                 # calculate new dispersion
                 left_x = []
                 left_y = []
-                right_x = []
-                right_y = []
                 for point in range(0, len(window)):
                     left_x.append(float(window[point][1]))
                     left_y.append(float(window[point][2]))
-                    right_x.append(float(window[point][6]))
-                    right_y.append(float(window[point][7]))
 
                 max_x_l = max(left_x)
                 max_y_l = max(left_y)
-                max_x_r = max(right_x)
-                max_y_r = max(right_y)
                 min_x_l = min(left_x)
                 min_y_l = min(left_y)
-                min_x_r = min(right_x)
-                min_y_r = min(right_y)
                 dispersion = (max_x_l - min_x_l) + (max_y_l - min_y_l)
 
             # note a fixation at the centoid of the window points
@@ -167,8 +151,8 @@ def main():
     # plot_points(image_name, erased)
 
     # Exercise 3 - IDT
-    dispersion_threshold = 100
-    duration_threshold = 100000
+    dispersion_threshold = 500
+    duration_threshold = 150000
 
     fixations_idt = idt(erased, dispersion_threshold, duration_threshold)
     plot_idt_fixations(image_name, fixations_idt)

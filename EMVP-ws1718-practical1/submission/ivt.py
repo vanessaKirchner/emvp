@@ -35,16 +35,15 @@ def plot_points(image_name, data):
     plt.savefig('eyes-overlay.jpg')
     plt.show()
 
+
 # Plot detected fixations
 def plot_fixations(image_name, data):
     image = plt.imread(image_name)
     implot = plt.imshow(image)
 
     for x in range(0, len(data)):
-        # left eye
+        # eye data
         plt.scatter([data[x][0]], [data[x][1]], s=20, c='r')
-        # right eye
-        # plt.scatter([data[x][2]], [data[x][3]], s=10, c='r')
 
     plt.savefig('ivt.jpg')
     plt.show()
@@ -78,9 +77,9 @@ def ivt(data, velocity_threshold):
     idx = 0  # group index
     for point in range(0, len(data) - 1):
 
-        if data[point][11] == '0':
+        if data[point][3] == '0':
 
-            if data[point + 1][11] == '1':
+            if data[point + 1][3] == '1':
                 idx = idx + 1
 
             continue
@@ -93,26 +92,19 @@ def ivt(data, velocity_threshold):
     # map each fixation group to a fixation at the centroid of its points
     for i in range(0, idx):  # for each group
         counter = 0
-        avg_lefteye_x = 0
-        avg_righteye_x = 0
-        avg_lefteye_y = 0
-        avg_righteye_y = 0
+        avg_x = 0
+        avg_y = 0
 
         # calculate centroid
         for point in range(0, len(fixations)):
-            if fixations[point][12] == i:
+            if fixations[point][4] == i:
                 counter = counter + 1
-                avg_lefteye_x = avg_lefteye_x + float(fixations[point][1])
-                avg_lefteye_y = avg_lefteye_y + float(fixations[point][2])
-                avg_righteye_x = avg_righteye_x + float(fixations[point][6])
-                avg_righteye_y = avg_righteye_y + float(fixations[point][7])
+                avg_x = avg_x + float(fixations[point][1])
+                avg_y = avg_y + float(fixations[point][2])
 
-        avg_lefteye_x = avg_lefteye_x / counter
-        avg_lefteye_y = avg_lefteye_y / counter
-        avg_righteye_x = avg_righteye_x / counter
-        avg_righteye_y = avg_righteye_y / counter
-
-        data = [avg_lefteye_x, avg_lefteye_y, avg_righteye_x, avg_righteye_y]
+        avg_x = avg_x / counter
+        avg_y = avg_y / counter
+        data = [avg_x, avg_y]
 
         fixation_centroids.append(data)
 
@@ -143,8 +135,16 @@ def main():
 
     # Exercise 3 - IVT
     velocity_threshold = 0.04  # threshold in microseconds
-    fixations_ivt = ivt(erased, velocity_threshold)
-    plot_fixations(image_name, fixations_ivt)
+
+    left_eye = []
+    for row in range(len(erased)):
+        data_left = [erased[row][0], erased[row][1], erased[row][2]]
+        left_eye.append(data_left)
+
+    fixations_left = ivt(left_eye, velocity_threshold)
+
+    plot_fixations(image_name, fixations_left)
+    print("Groups left eye: " + str(len(fixations_left)))
 
 
 if __name__ == "__main__":
