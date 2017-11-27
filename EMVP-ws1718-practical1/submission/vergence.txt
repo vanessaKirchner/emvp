@@ -1,1 +1,6 @@
-Your answer here.
+The depth is calculated as follows:
+The ratio is important here:
+5/x = 32/(600+x)
+You'll see why, if you draw the sketch (sadly not possible in a .txt-file).
+If you solve for x, then you get x=111,11mm.
+Therefore the depth of the 3D point (w.r.t to the eye center) is 600mm+111,11mm = 711,11 mm
