@@ -1,1 +1,12 @@
-Your answer here.
+
+given width: 500 mm
+given height: 300 mm
+
+The stimuli image has 2560 x 1600 pixel. The ration of mm per pixel is asked. This can be calculated by dividing the
+number of pixel through the given mm.
+
+width: 500 mm / 2560 px ~ 0.195
+height: 300 mm / 1600 px ~ 0.185
+
+The ratio of width and height is quite similar and approximately 0.19. The pixels are quadratic. So ca. 0.19 mm can be used
+for one pixel in both directions.
