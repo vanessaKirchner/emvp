@@ -8,5 +8,5 @@ number of pixel through the given mm.
 width: 500 mm / 2560 px ~ 0.195
 height: 300 mm / 1600 px ~ 0.185
 
-The ratio of width and height is quite similar and approximately 0.19. The pixels are quadratic. So 0.19 mm can be used
-for one pixel in both directions. 
+The ratio of width and height is quite similar and approximately 0.19. The pixels are quadratic. So ca. 0.19 mm can be used
+for one pixel in both directions.
