@@ -1,0 +1,5 @@
+One advantage of the use of gaze in pixels is that you don't need the distance from the viewer to the image.
+But this information could be useful to know for the overall experiment.
+On the other hand, the person needs to stay at the same fixed place the whole experiment, if you want to use the distance.
+
+But this decision highly depends on the eye tracking experiment setup.
