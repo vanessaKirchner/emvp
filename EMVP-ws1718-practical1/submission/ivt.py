@@ -3,6 +3,7 @@ import sys
 import csv
 import numpy
 import matplotlib.pyplot as plt
+import math
 
 
 # ------- Exercise 2.2
@@ -41,12 +42,11 @@ def plot_fixations(image_name, data):
 
     for x in range(0, len(data)):
         # left eye
-        plt.scatter([data[x][0]], [data[x][1]], s=10, c='b')
-
+        plt.scatter([data[x][0]], [data[x][1]], s=20, c='r')
         # right eye
-        plt.scatter([data[x][2]], [data[x][3]], s=10, c='r')
+        # plt.scatter([data[x][2]], [data[x][3]], s=10, c='r')
 
-    plt.savefig('ivt-overlay.jpg') # TODO Speichern funktioniert hier irgendwie nicht? Oder anscheinend schon?
+    plt.savefig('ivt.jpg')
     plt.show()
 
 
@@ -59,8 +59,12 @@ def ivt(data, velocity_threshold):
     for point in range(0, len(data) - 1):
 
         # Calculate the point-to-point velocities for each point in the protocol
-        velocity = float(data[point + 1][0]) - float(data[point][0])
-        # TODO velocity richtig? Eventuell Gradzahl?
+        time = float(data[point + 1][0]) - float(data[point][0])
+        distance_x_l = float(data[point + 1][1]) - float(data[point][1])
+        distance_y_l = float(data[point + 1][2]) - float(data[point][2])
+        distance_l = math.sqrt(math.pow(distance_x_l, 2) + math.pow(distance_y_l, 2))
+
+        velocity = distance_l / time
 
         # Label each point below velocity threshold as a fixation point, otherwise saccade
         if velocity < velocity_threshold:
@@ -68,15 +72,15 @@ def ivt(data, velocity_threshold):
         else:
             data[point].append('0')
 
-    data[len(data)-1].append('0') #last point is saccade, algorithm can use more points
+    data[len(data) - 1].append('0')  # last point is saccade, algorithm can use more points
 
     # Collapse consecutive fixation points into fixation groups, removing saccade points
-    idx = 0 # group index
+    idx = 0  # group index
     for point in range(0, len(data) - 1):
 
-        if (data[point][11] == '0'):
+        if data[point][11] == '0':
 
-            if(data[point+1][11] == '1'):
+            if data[point + 1][11] == '1':
                 idx = idx + 1
 
             continue
@@ -85,8 +89,9 @@ def ivt(data, velocity_threshold):
         fixations.append(data[point])
 
     fixation_centroids = []
+
     # map each fixation group to a fixation at the centroid of its points
-    for i in range(0, idx): # for each group
+    for i in range(0, idx):  # for each group
         counter = 0
         avg_lefteye_x = 0
         avg_righteye_x = 0
@@ -94,8 +99,8 @@ def ivt(data, velocity_threshold):
         avg_righteye_y = 0
 
         # calculate centroid
-        for point in range(0,len(fixations)):
-            if (fixations[point][12] == i):
+        for point in range(0, len(fixations)):
+            if fixations[point][12] == i:
                 counter = counter + 1
                 avg_lefteye_x = avg_lefteye_x + float(fixations[point][1])
                 avg_lefteye_y = avg_lefteye_y + float(fixations[point][2])
@@ -107,13 +112,9 @@ def ivt(data, velocity_threshold):
         avg_righteye_x = avg_righteye_x / counter
         avg_righteye_y = avg_righteye_y / counter
 
-        print("Group " + str(i) + " Left: " + str(avg_lefteye_x) + " " + str(avg_lefteye_y) + " Right: " + str(avg_righteye_x) + " " + str(avg_righteye_y))
-
         data = [avg_lefteye_x, avg_lefteye_y, avg_righteye_x, avg_righteye_y]
 
         fixation_centroids.append(data)
-
-    # TODO welcher Punkt ist Fixation? Kann man einfach so den Centroid nehmen auch wenn dieser nicht in den Punkten vorhanden ist?
 
     # Return fixations
     print("IVT finished: " + str(idx) + " Groups detected")
@@ -135,16 +136,16 @@ def main():
 
     # Remove invalid data points
     erased = remove_invalid(datalist)
-    # TODO: Sind das wirklich alle die Invalid sind?
 
     # Show data points on image
     image_name = 'stimuli.jpg'
-    #plot_points(image_name, erased)
+    # plot_points(image_name, erased)
 
     # Exercise 3 - IVT
-    velocity_threshold = 150000  # threshold in microseconds
+    velocity_threshold = 0.04  # threshold in microseconds
     fixations_ivt = ivt(erased, velocity_threshold)
     plot_fixations(image_name, fixations_ivt)
 
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    main()

@@ -39,20 +39,17 @@ def plot_idt_fixations(image_name, data):
 
     for x in range(0, len(data)):
         # left eye
-        plt.scatter([data[x][0]], [data[x][1]], s=10, c='b')
+        plt.scatter([data[x][0]], [data[x][1]], s=20, c='g')
 
     plt.savefig('idt-overlay.jpg')
     plt.show()
 # ------- Exercise 3 I-DT
 
+
 def idt(data, dispersion_threshold, duration_threshold):
-    dispersion_threshold = 200
-    # duration_threshold = 6666061580  # TODO: welcher Wert (100 000 = gleich wie auf Übungsblatt?)
-
     fixations = []
-
     counter = 0
-    ##while there are still some points
+    # while there are still some points
     while data:
         idx = 0
         window = []
@@ -96,7 +93,7 @@ def idt(data, dispersion_threshold, duration_threshold):
                 idx = idx + 1
                 counter = counter + 1
 
-                #calculate new dispersion
+                # calculate new dispersion
                 left_x = []
                 left_y = []
                 right_x = []
@@ -117,7 +114,7 @@ def idt(data, dispersion_threshold, duration_threshold):
                 min_y_r = min(right_y)
                 dispersion = (max_x_l - min_x_l) + (max_y_l - min_y_l)
 
-            #note a fixation at the centoid of the window points
+            # note a fixation at the centoid of the window points
             avg_x_l = 0
             avg_y_l = 0
             for point in range(0, len(window)):
@@ -128,13 +125,13 @@ def idt(data, dispersion_threshold, duration_threshold):
             avg_y_l = avg_y_l / len(window)
             centroid = [avg_x_l, avg_y_l]
             fixations.append(centroid)
-            #remove winow points from data points
+            # remove winow points from data points
             data_temp = []
             for row in range(counter, len(data)):
                 data_temp.append(data[row])
             data = data_temp
         else:
-            #remove first point from data points
+            # remove first point from data points
             data_temp = []
             for row in range(1, len(data)):
                 data_temp.append(data[row])
@@ -150,7 +147,7 @@ def main():
     # Test Python version
     # sys.stdout.write("hello from Python %s\n" % (sys.version,))
 
-    ############ Exercise 2.1
+    # ---------- Exercise 2.1
 
     # Read data
     datalist = []
@@ -164,7 +161,6 @@ def main():
 
     # Remove invalid data points
     erased = remove_invalid(datalist)
-    # TODO: Sind das wirklich alle die Invalid sind?
 
     # Show data points on image
     image_name = 'stimuli.jpg'
@@ -172,10 +168,11 @@ def main():
 
     # Exercise 3 - IDT
     dispersion_threshold = 100
-    duration_threshold = 100000  # TODO: welcher Wert (100.000, so wie es auf blatt steht?)
+    duration_threshold = 100000
 
     fixations_idt = idt(erased, dispersion_threshold, duration_threshold)
     plot_idt_fixations(image_name, fixations_idt)
 
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    main()

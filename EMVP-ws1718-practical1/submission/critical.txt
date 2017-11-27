@@ -1,1 +1,3 @@
-Your answer here.
+Thresholds:
+IVT: 0.04
+IDT: 500, 150000
