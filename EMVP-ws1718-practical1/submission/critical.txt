@@ -1,3 +1,24 @@
-Thresholds:
-IVT: 0.04
-IDT: 500, 150000
+We chose the thresholds for I-VT and I-DT as follows:
+IVT: velocitiy-threshold = 0.04
+IDT: dispersion-threshold = 500, duration-threshold = 150000 (microseconds as given on exercise sheet)
+
+- I-VT: kleinerer threshold --> mehr detektierte Fixations-Gruppen
+- I-DT: dispersion-threshold wird größer bis Punkt x (ca. 750) -> mehr detektierte Fixations-Gruppen
+		dispersion-threshold wird größer ab Punkt x (ca. 750) -> weniger detektierte Fixations-Gruppen
+		(bei gleichbleibendem duration-threshold)
+		
+The detected fixation groups are shifted. A possible reason for this could be the different determination of the fixation groups.
+In the I-VT algorithm, you only look at two following data points and then already determine if they are a saccade or a fixation.
+In the I-DT algorithm, you look at a large window of data points and then determine for the first data point of the window if it is a saccade or a fixation.
+This way, you get different fixation groups.
+I-VT takes the velocity in account, I-DT looks at the distance between the different data points.
+
+I-DT has more fixation groups near eachother, because if a data point, which is the minimum or maximum is removed from the window and another datapoint which is
+a new minimum or maximum, just little bit closer to the other points, a new fixation group can be found.
+
+When a person moves his eyes really slowly but steady over the image, every point is marked as a fixation point, until he moves his eyes faster. The center of this
+fixation group can this way be not really representitive. E.g a person could move his eyes all over the y-coordinate slowly over the image and the fixation group would be 
+in the middle if the image.
+
+		
+	
